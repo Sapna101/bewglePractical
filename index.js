@@ -48,9 +48,11 @@ app.all('/process',async function(req, res, err){
 
 });
 
-app.get('/state',async function(req, res, err){
-  const resdata = await requestJsonData.find({});
-  console.log(resdata);
+app.get('/stats',async function(req, res, err){
+  const resdata = await requestJsonData.aggregate([
+    {"$group" : { _id:"$method", count:{$sum:1} , Avg :  { $avg : "$duration"} } }
+  ]);
+  // console.log(resdata);
   res.json(resdata);
 });
 
