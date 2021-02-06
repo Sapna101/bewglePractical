@@ -37,15 +37,6 @@ app.all('/process',async function(req, res, err){
   setTimeout(()=>{
     res.json({});
   },duration*1000);
-
-  // console.log("process Date",new Date().toISOString());
-  // console.log("process method",req.method);
-  // console.log("process headers",req.headers);
-  // console.log("process path",req.route.path);
-  // console.log("process query",req.query);
-  // console.log("process body",req.body);
-  // console.log("process duration",duration);
-
 });
 
 app.get('/stats',async function(req, res, err){
