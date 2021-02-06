@@ -50,9 +50,10 @@ app.all('/process',async function(req, res, err){
 
 app.get('/stats',async function(req, res, err){
   const resdata = await requestJsonData.aggregate([
-    {"$group" : { _id:"$method", count:{$sum:1} , Avg :  { $avg : "$duration"} } }
+    { "$match" : { date : { $gte : new Date(req.query.fromdate) , $lte : new Date(req.query.todate)}}},
+    {  "$group" : { _id:"$method", count:{$sum:1} , Avg :  { $avg : "$duration"} } }
   ]);
-  // console.log(resdata);
+  console.log(resdata);
   res.json(resdata);
 });
 
