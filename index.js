@@ -40,12 +40,16 @@ app.all('/process',async function(req, res, err){
 });
 
 app.get('/stats',async function(req, res, err){
-  const resdata = await requestJsonData.aggregate([
-    { "$match" : { date : { $gte : new Date(req.query.fromdate) , $lte : new Date(req.query.todate)}}},
-    {  "$group" : { _id:"$method", count:{$sum:1} , Avg :  { $avg : "$duration"} } }
-  ]);
-  console.log(resdata);
-  res.json(resdata);
+  try{
+    const resdata = await requestJsonData.aggregate([
+      { "$match" : { date : { $gte : new Date(req.query.fromdate) , $lte : new Date(req.query.todate)}}},
+      {  "$group" : { _id:"$method", count:{$sum:1} , Avg :  { $avg : "$duration"} } }
+    ]);
+    console.log(resdata);
+    res.json(resdata);
+  } catch(err){
+    console.log(err);
+  }
 });
 
 function randomDuration(min, max){
